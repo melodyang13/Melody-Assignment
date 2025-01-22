@@ -1,0 +1,16 @@
+{
+    "leaveData": [
+      { "id": 1, "name": "DARREN ESPIRITU", "company": "TRONER ENTERPRISES INC.", "leaveType": "Sick Leave", "dateFiled": "11-12-2024", "startDate": "12-12-2024", "endDate": "12-12-2024" },
+      { "id": 2, "name": "JANE DOE", "company": "GLOBAL TECH INC.", "leaveType": "Vacation Leave", "dateFiled": "10-11-2024", "startDate": "15-11-2024", "endDate": "20-11-2024" },
+      { "id": 3, "name": "JOHN SMITH", "company": "ACME CORPORATION", "leaveType": "Maternity Leave", "dateFiled": "08-11-2024", "startDate": "01-12-2024", "endDate": "31-12-2024" },
+      { "id": 4, "name": "ALICE JOHNSON", "company": "NEXTGEN TECH", "leaveType": "Sick Leave", "dateFiled": "05-10-2024", "startDate": "10-10-2024", "endDate": "12-10-2024" },
+      { "id": 5, "name": "ROBERT BROWN", "company": "INNOVATE SOLUTIONS", "leaveType": "Vacation Leave", "dateFiled": "15-09-2024", "startDate": "20-09-2024", "endDate": "25-09-2024" },
+      { "id": 6, "name": "EMILY DAVIS", "company": "SOFTTECH INC.", "leaveType": "Paternity Leave", "dateFiled": "01-09-2024", "startDate": "05-09-2024", "endDate": "10-09-2024" },
+      { "id": 7, "name": "DAVID WILSON", "company": "BLUE SKY CORP", "leaveType": "Sick Leave", "dateFiled": "10-08-2024", "startDate": "15-08-2024", "endDate": "17-08-2024" },
+      { "id": 8, "name": "LINDA MARTIN", "company": "TECHWAVE LTD.", "leaveType": "Vacation Leave", "dateFiled": "20-07-2024", "startDate": "25-07-2024", "endDate": "30-07-2024" },
+      { "id": 9, "name": "MICHAEL LEE", "company": "FASTLANE SYSTEMS", "leaveType": "Sick Leave", "dateFiled": "05-07-2024", "startDate": "10-07-2024", "endDate": "12-07-2024" },
+      { "id": 10, "name": "SARAH CLARK", "company": "VERTEX TECHNOLOGIES", "leaveType": "Maternity Leave", "dateFiled": "25-06-2024", "startDate": "01-07-2024", "endDate": "31-07-2024" },
+      { "id": 11, "name": "JAMES HARRIS", "company": "UPGRADE TECH", "leaveType": "Sick Leave", "dateFiled": "15-06-2024", "startDate": "20-06-2024", "endDate": "25-06-2024" },
+      { "id": 12, "name": "PATRICIA WALKER", "company": "DIGITAL SOLUTIONS", "leaveType": "Vacation Leave", "dateFiled": "10-05-2024", "startDate": "15-05-2024", "endDate": "20-05-2024" }
+    ]
+  }
