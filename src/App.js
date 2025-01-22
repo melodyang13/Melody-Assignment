@@ -1,28 +1,21 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../src/App.css";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLeaveData } from './features/leaveSlice';
+import { approveLeave, rejectLeave, cancelLeave } from './features/leaveSlice';
 
 const LeaveTable = () => {
-  const leaveData = [
-    { name: "DARREN ESPIRITU", company: "TRONER ENTERPRISES INC.", leaveType: "Sick Leave", dateFiled: "11-12-2024", startDate: "12-12-2024", endDate: "12-12-2024" },
-    { name: "JANE DOE", company: "GLOBAL TECH INC.", leaveType: "Vacation Leave", dateFiled: "10-11-2024", startDate: "15-11-2024", endDate: "20-11-2024" },
-    { name: "JOHN SMITH", company: "ACME CORPORATION", leaveType: "Maternity Leave", dateFiled: "08-11-2024", startDate: "01-12-2024", endDate: "31-12-2024" },
-    { name: "ALICE JOHNSON", company: "NEXTGEN TECH", leaveType: "Sick Leave", dateFiled: "05-10-2024", startDate: "10-10-2024", endDate: "12-10-2024" },
-    { name: "ROBERT BROWN", company: "INNOVATE SOLUTIONS", leaveType: "Vacation Leave", dateFiled: "15-09-2024", startDate: "20-09-2024", endDate: "25-09-2024" },
-    { name: "EMILY DAVIS", company: "SOFTTECH INC.", leaveType: "Paternity Leave", dateFiled: "01-09-2024", startDate: "05-09-2024", endDate: "10-09-2024" },
-    { name: "DAVID WILSON", company: "BLUE SKY CORP", leaveType: "Sick Leave", dateFiled: "10-08-2024", startDate: "15-08-2024", endDate: "17-08-2024" },
-    { name: "LINDA MARTIN", company: "TECHWAVE LTD.", leaveType: "Vacation Leave", dateFiled: "20-07-2024", startDate: "25-07-2024", endDate: "30-07-2024" },
-    { name: "MICHAEL LEE", company: "FASTLANE SYSTEMS", leaveType: "Sick Leave", dateFiled: "05-07-2024", startDate: "10-07-2024", endDate: "12-07-2024" },
-    { name: "SARAH CLARK", company: "VERTEX TECHNOLOGIES", leaveType: "Maternity Leave", dateFiled: "25-06-2024", startDate: "01-07-2024", endDate: "31-07-2024" },
-    { name: "JAMES HARRIS", company: "UPGRADE TECH", leaveType: "Sick Leave", dateFiled: "15-06-2024", startDate: "20-06-2024", endDate: "25-06-2024" },
-    { name: "PATRICIA WALKER", company: "DIGITAL SOLUTIONS", leaveType: "Vacation Leave", dateFiled: "10-05-2024", startDate: "15-05-2024", endDate: "20-05-2024" }
-  ];
-  
+  const dispatch = useDispatch();
+  const leaveData = useSelector((state) => state.leave.data);
+  const status = useSelector((state) => state.leave.status);
+  const error = useSelector((state) => state.leave.error);
+
   const [searchExpanded, setSearchExpanded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 8;
+  const [selectedRows, setSelectedRows] = useState([]); 
   const filteredData = leaveData.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.company.toLowerCase().includes(searchTerm.toLowerCase())
@@ -33,8 +26,63 @@ const LeaveTable = () => {
   const totalPages = Math.ceil(filteredData.length / entriesPerPage);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  
 
+
+   const handleCheckboxChange = (leaveId) => {
+    if (selectedRows.includes(leaveId)) {
+      setSelectedRows(selectedRows.filter((id) => id !== leaveId)); // Uncheck
+    } else {
+      setSelectedRows([...selectedRows, leaveId]); // Check
+    }
+  };
+  
+  const handleApprove = () => {
+    selectedRows.forEach((leaveId) => {
+      dispatch(approveLeave(leaveId));
+    });
+    setSelectedRows([]); 
+  };
+
+  const handleReject = () => {
+    selectedRows.forEach((leaveId) => {
+      dispatch(rejectLeave(leaveId));
+    });
+    setSelectedRows([]); 
+  };
+
+  const handleCancel = () => {
+    selectedRows.forEach((leaveId) => {
+      dispatch(cancelLeave(leaveId));
+    });
+    setSelectedRows([]); 
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Approved':
+        return 'success'; 
+      case 'Rejected':
+        return 'danger'; 
+      case 'Canceled':
+        return 'warning'; 
+      default:
+        return 'light'; 
+    }
+  };
+
+  useEffect(() => {
+    dispatch(fetchLeaveData());
+  }, [dispatch]);
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
+
+  
   return (
     <div className="container mt-5 border rounded-5 border-mute p-2">
     
@@ -71,14 +119,14 @@ const LeaveTable = () => {
     
   
     <div className="action-container d-flex gap-2 flex-wrap mb-3">
-      <button className="btn custom-btn rounded-5">
+      <button className="btn custom-btn rounded-5" onClick={handleApprove}>
         <i className="bi bi-hand-thumbs-up-fill px-2"></i>APPROVE
       </button>
-      <button className="btn btn-danger rounded-5">
+      <button className="btn btn-danger rounded-5" onClick={handleReject}>
         <i className="bi bi-hand-thumbs-down-fill px-2"></i>REJECT
       </button>
-      <button className="btn btn-orange rounded-5">
-        <i className="bi bi-x px-2"></i>CANCEL
+      <button className="btn btn-orange rounded-5" onClick={handleCancel}>
+        <i className="bi bi-sx px-2"></i>CANCEL
       </button>
     </div>
   
@@ -94,18 +142,28 @@ const LeaveTable = () => {
               <th>DATE FILED</th>
               <th>START DATE</th>
               <th>END DATE</th>
+              <th>STATUS</th>
             </tr>
           </thead>
           <tbody>
             {currentEntries.map((item, index) => (
-              <tr key={index}>
-                <td><input type="checkbox" /></td>
+              <tr key={item.id}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedRows.includes(item.id)}
+                    onChange={() => handleCheckboxChange(item.id)}
+                  />
+                </td>
                 <td>{item.name}</td>
                 <td>{item.company}</td>
                 <td>{item.leaveType}</td>
                 <td>{item.dateFiled}</td>
                 <td>{item.startDate}</td>
                 <td>{item.endDate}</td>
+                <td> <span className={`badge rounded-pill text-bg-${getStatusColor(item.status)}`}>
+                {!item.status ? "Pending" : item.status}
+        </span></td>
               </tr>
             ))}
           </tbody>
