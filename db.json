@@ -119,6 +119,54 @@
       "startDate": "15-05-2024",
       "endDate": "20-05-2024",
       "status": "Approved"
+    },
+    {
+      "id": "74c5",
+      "name": "Melody Jane Ang",
+      "company": "iEminence",
+      "leaveType": "Vacation Leave",
+      "dateFiled": "",
+      "startDate": "2025-01-27",
+      "endDate": "2025-01-29"
+    },
+    {
+      "id": "e426",
+      "name": "JUAN LOPEZ",
+      "company": "iEminence",
+      "leaveType": "Vacation Leave",
+      "dateFiled": "2025-01-23",
+      "startDate": "2025-01-23",
+      "endDate": "2025-01-24",
+      "status": "Approved"
+    },
+    {
+      "id": "9a97",
+      "name": "JUAN LOPEZ",
+      "company": "iEminence",
+      "leaveType": "Sick Leave",
+      "dateFiled": "2025-01-23",
+      "startDate": "2025-01-24",
+      "endDate": "2025-01-30",
+      "status": "Rejected"
+    },
+    {
+      "id": "1fc4",
+      "name": "Hello world",
+      "company": "iEminence",
+      "leaveType": "Maternity Leave",
+      "dateFiled": "2025-01-23",
+      "startDate": "2025-01-28",
+      "endDate": "2025-06-07"
+    },
+    {
+      "id": "e300",
+      "name": "ELIJAH MARIE",
+      "company": "IEMINENCE",
+      "leaveType": "Emergency Leave",
+      "dateFiled": "2025-01-23",
+      "startDate": "2025-01-24",
+      "endDate": "2025-01-24",
+      "status": "Approved"
     }
   ]
 }

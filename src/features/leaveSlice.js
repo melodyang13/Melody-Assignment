@@ -52,6 +52,15 @@ export const cancelLeave = createAsyncThunk(
   }
 );
 
+// Create New Leave
+export const createNewLeave = createAsyncThunk(
+  'leave/createNewLeave',
+  async (newLeave) => {
+    const response = await axios.post('http://localhost:3001/leaveData', newLeave);
+    return response.data; // Return the newly created leave
+  }
+);
+
 const leaveSlice = createSlice({
   name: 'leave',
   initialState: {
@@ -62,6 +71,7 @@ const leaveSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
+      // Fetch leave data
       .addCase(fetchLeaveData.pending, (state) => {
         state.status = 'loading';
       })
@@ -73,6 +83,7 @@ const leaveSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
+      // Approve leave
       .addCase(approveLeave.fulfilled, (state, action) => {
         const leaveId = action.payload;
         const leave = state.data.find((item) => item.id === leaveId);
@@ -80,6 +91,7 @@ const leaveSlice = createSlice({
           leave.status = 'Approved';
         }
       })
+      // Reject leave
       .addCase(rejectLeave.fulfilled, (state, action) => {
         const leaveId = action.payload;
         const leave = state.data.find((item) => item.id === leaveId);
@@ -87,12 +99,20 @@ const leaveSlice = createSlice({
           leave.status = 'Rejected';
         }
       })
+      // Cancel leave
       .addCase(cancelLeave.fulfilled, (state, action) => {
         const leaveId = action.payload;
         const leave = state.data.find((item) => item.id === leaveId);
         if (leave) {
           leave.status = 'Canceled';
         }
+      })
+      // Create new leave
+      .addCase(createNewLeave.fulfilled, (state, action) => {
+        state.data.push(action.payload); 
+      })
+      .addCase(createNewLeave.rejected, (state, action) => {
+        state.error = action.error.message; 
       });
   },
 });

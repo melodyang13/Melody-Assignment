@@ -4,6 +4,7 @@ import "../src/App.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLeaveData } from './features/leaveSlice';
 import { approveLeave, rejectLeave, cancelLeave } from './features/leaveSlice';
+import NewLeaveModal from "./components/NewLeaveModal";
 
 const LeaveTable = () => {
   const dispatch = useDispatch();
@@ -27,8 +28,7 @@ const LeaveTable = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 
-
-   const handleCheckboxChange = (leaveId) => {
+  const handleCheckboxChange = (leaveId) => {
     if (selectedRows.includes(leaveId)) {
       setSelectedRows(selectedRows.filter((id) => id !== leaveId)); // Uncheck
     } else {
@@ -110,14 +110,20 @@ const LeaveTable = () => {
             />
           )}
         </div>
-        <button className="btn custom-btn"><i className="bi bi-plus"></i></button>
+        
+        <button 
+        type="button" 
+        data-bs-toggle ="modal" 
+        data-bs-target="#createLeaveModal" 
+        className="btn custom-btn"><i className="bi bi-plus"></i></button>
+      
         <button className="btn btn-light border-secondary">
           <i className="bi bi-grid-3x3-gap px-2"></i>SHOW MORE
         </button>
       </div>
     </div>
     
-  
+
     <div className="action-container d-flex gap-2 flex-wrap mb-3">
       <button className="btn custom-btn rounded-5" onClick={handleApprove}>
         <i className="bi bi-hand-thumbs-up-fill px-2"></i>APPROVE
@@ -126,7 +132,7 @@ const LeaveTable = () => {
         <i className="bi bi-hand-thumbs-down-fill px-2"></i>REJECT
       </button>
       <button className="btn btn-orange rounded-5" onClick={handleCancel}>
-        <i className="bi bi-sx px-2"></i>CANCEL
+        <i className="bi bi-x px-2"></i>CANCEL
       </button>
     </div>
   
@@ -163,12 +169,14 @@ const LeaveTable = () => {
                 <td>{item.endDate}</td>
                 <td> <span className={`badge rounded-pill text-bg-${getStatusColor(item.status)}`}>
                 {!item.status ? "Pending" : item.status}
-        </span></td>
+                </span></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+
       <div className="pagination-bd my-4 rounded-pill">
         <div className="d-flex justify-content-between align-items-center bg-white rounded-pill p-3 flex-wrap">
           <div>
@@ -194,7 +202,9 @@ const LeaveTable = () => {
             </ul>
           </nav>
         </div>
+       
       </div>
+      <NewLeaveModal/>
     </div>
   );
 };
